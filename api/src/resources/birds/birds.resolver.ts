@@ -3,8 +3,7 @@ import { BirdsService } from './birds.service'
 import { Bird } from './entities/bird.entity'
 import { CreateBirdInput } from './dto/create-bird.input'
 import { UpdateBirdInput } from './dto/update-bird.input'
-import { DeleteResult, UpdateResult } from 'typeorm'
-import { ClientMessage } from 'src/entities/ClientMessage'
+import { ClientMessage } from '../../entities/ClientMessage'
 
 @Resolver(() => Bird)
 export class BirdsResolver {

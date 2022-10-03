@@ -3,7 +3,7 @@ import { AreasService } from './areas.service'
 import { Area } from './entities/area.entity'
 import { CreateAreaInput } from './dto/create-area.input'
 import { UpdateAreaInput } from './dto/update-area.input'
-import { ClientMessage } from 'src/entities/ClientMessage'
+import { ClientMessage } from '../../entities/ClientMessage'
 
 @Resolver(() => Area)
 export class AreasResolver {

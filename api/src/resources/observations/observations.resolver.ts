@@ -1,19 +1,10 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  ResolveField,
-  Parent,
-} from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { ObservationsService } from './observations.service'
 import { Observation } from './entities/observation.entity'
 import { CreateObservationInput } from './dto/create-observation.input'
 import { UpdateObservationInput } from './dto/update-observation.input'
-import { BirdsService } from 'src/resources/birds/birds.service'
-import { Area } from 'src/resources/areas/entities/area.entity'
-import { AreasService } from 'src/resources/areas/areas.service'
+import { BirdsService } from '../birds/birds.service'
+import { AreasService } from '../areas/areas.service'
 
 @Resolver(() => Observation)
 export class ObservationsResolver {

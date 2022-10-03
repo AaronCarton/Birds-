@@ -1,6 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql'
-import { Bird } from 'src/resources/birds/entities/bird.entity'
-import { Area } from 'src/resources/areas/entities/Area.entity'
 
 @InputType()
 export class CreateObservationInput {

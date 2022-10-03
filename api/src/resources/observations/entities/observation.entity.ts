@@ -1,7 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { ObjectId } from 'mongodb'
-import { Area } from 'src/resources/areas/entities/area.entity'
-import { Bird } from 'src/resources/birds/entities/bird.entity'
+import { Area } from '../../areas/entities/area.entity'
+import { Bird } from '../../birds/entities/bird.entity'
 import {
   Column,
   CreateDateColumn,
