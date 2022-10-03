@@ -15,7 +15,7 @@ export class DatabaseSeedService {
   async addAllBirds(): Promise<Bird[]> {
     let theBirds: Bird[] = []
     //@ts-ignore
-    for (let jsonb of jsonBirdsSeed.birds) {
+    for (let jsonb of jsonBirdsSeed) {
       //* let b = plainToInstance(Bird, jsonb);
       const b = new Bird()
       b.name = jsonb.name
