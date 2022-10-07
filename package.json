@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "This is the main repository to follow the course for 'Advanced fullstack development' - 3MCT.",
   "scripts": {
-    "dev:back": "npm run start:dev -w api",
     "dev:front": "npm run dev -w pwa",
+    "dev:back": "npm run start:dev -w api",
     "dev": "run-p dev:front dev:back"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/MLoth/Birds-.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "ML",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MLoth/Birds-/issues"
@@ -22,7 +22,7 @@
     "pwa",
     "api"
   ],
-  "dependencies": {
+  "devDependencies": {
     "npm-run-all": "^4.1.5"
   }
 }
