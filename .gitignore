@@ -1,3 +1,4 @@
 **/node_modules/
-pwa/.env
+**/.env
 **/dist/
+api/firebase-adminsdk.json

@@ -2,7 +2,7 @@ import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 
-import { Bird } from '../birds/entities/bird.entity'
+import { Bird } from '../resources/birds/entities/bird.entity'
 import * as jsonBirdsSeed from './data/scraped-birds.json' //tsconfig "resolveJsonModule": true,
 
 @Injectable()

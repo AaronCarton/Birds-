@@ -1,24 +1,16 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  ResolveField,
-  Parent,
-} from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 
 import { ObservationsService } from './observations.service'
 import { Observation } from './entities/observation.entity'
 import { CreateObservationInput } from './dto/create-observation.input'
 import { UpdateObservationInput } from './dto/update-observation.input'
-import { BirdsService } from 'src/birds/birds.service'
-import { LocationsService } from 'src/locations/locations.service'
+import { BirdsService } from '../birds/birds.service'
+import { LocationsService } from '../locations/locations.service'
 import { Bird } from '../birds/entities/bird.entity'
-import { Location } from 'src/locations/entities/location.entity'
-import {
-  ClientMessage,
-  MessageTypes,
-} from '../bootstrap/entities/ClientMessage'
+import { Location } from '../locations/entities/location.entity'
+import { ClientMessage, MessageTypes } from '../../bootstrap/entities/ClientMessage'
+import { UseGuards } from '@nestjs/common'
+import { FirebaseGuard } from 'src/auth/guards/firebase.guard'
 
 @Resolver(() => Observation)
 export class ObservationsResolver {
@@ -46,6 +38,7 @@ export class ObservationsResolver {
     return this.observationsService.create(createObservationInput)
   }
 
+  @UseGuards(FirebaseGuard)
   @Query(() => [Observation], { name: 'observations' })
   findAll() {
     return this.observationsService.findAll()

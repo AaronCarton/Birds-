@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import {
-  ClientMessage,
-  MessageTypes,
-} from '../bootstrap/entities/ClientMessage'
+import { ClientMessage, MessageTypes } from '../../bootstrap/entities/ClientMessage'
 import { BirdsResolver } from './birds.resolver'
 import { BirdsService } from './birds.service'
 import { CreateBirdInput } from './dto/create-bird.input'
@@ -145,9 +142,7 @@ describe('BirdsResolver', () => {
       })
 
       it('Is the error message shown when something goes wrong?', async () => {
-        jest
-          .spyOn(service, 'remove')
-          .mockResolvedValue({ affected: 1000, raw: '' })
+        jest.spyOn(service, 'remove').mockResolvedValue({ affected: 1000, raw: '' })
 
         result = await resolver.removeBird(createBird().id)
 

@@ -4,31 +4,33 @@
       <RouterLink
         to="/observations/add"
         class="bg-theme rounded-md bg-neutral-800 px-4 py-2 text-white"
-        @click="createObservation"
       >
         Create observation
       </RouterLink>
     </template>
-    <ObservationTable v-if="result" :observations="result.observations" />
+
+    <ObservationsTable v-if="result" :observations="result.observations" />
   </route-holder>
 </template>
 
 <script lang="ts">
 import gql from 'graphql-tag'
 import RouteHolder from '../../components/holders/RouteHolder.vue'
-import ObservationTable from '../../components/observations/ObservationTable.vue'
+import ObservationsTable from '../../components/observation/ObservationsTable.vue'
 import { useQuery } from '@vue/apollo-composable'
 
 export default {
   components: {
     RouteHolder,
-    ObservationTable,
+    ObservationsTable,
   },
+
   setup() {
     const OBSERVATIONS = gql`
       query observations {
         observations {
           id
+          name
           bird {
             id
             name
@@ -37,12 +39,12 @@ export default {
             id
             name
           }
-          name
           userId
           createdAt
         }
       }
     `
+
     const { result, loading, error } = useQuery(OBSERVATIONS)
 
     return {

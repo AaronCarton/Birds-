@@ -4,19 +4,14 @@ import { Bird } from './entities/bird.entity'
 import { BirdsService } from './birds.service'
 import { CreateBirdInput } from './dto/create-bird.input'
 import { UpdateBirdInput } from './dto/update-bird.input'
-import {
-  ClientMessage,
-  MessageTypes,
-} from '../bootstrap/entities/ClientMessage'
+import { ClientMessage, MessageTypes } from '../../bootstrap/entities/ClientMessage'
 
 @Resolver(() => Bird)
 export class BirdsResolver {
   constructor(private readonly birdsService: BirdsService) {}
 
   @Mutation(() => Bird, { description: 'Create a bird using the DTO.' })
-  createBird(
-    @Args('createBirdInput') createBirdInput: CreateBirdInput,
-  ): Promise<Bird> {
+  createBird(@Args('createBirdInput') createBirdInput: CreateBirdInput): Promise<Bird> {
     return this.birdsService.create(createBirdInput)
   }
 
@@ -31,9 +26,7 @@ export class BirdsResolver {
   }
 
   @Mutation(() => Bird)
-  updateBird(
-    @Args('updateBirdInput') updateBirdInput: UpdateBirdInput,
-  ): Promise<Bird> {
+  updateBird(@Args('updateBirdInput') updateBirdInput: UpdateBirdInput): Promise<Bird> {
     return this.birdsService.update(updateBirdInput)
   }
 

@@ -106,9 +106,11 @@ const router: Router = createRouter({
   routes,
 })
 
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-  if (to.meta.needsAuthentication && !user.value) return '/auth/login'
-  if (to.meta.cantAuthenticate && user.value) return '/'
-})
+router.beforeEach(
+  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    if (to.meta.needsAuthentication && !user.value) return '/auth/login'
+    if (to.meta.cantAuthenticate && user.value) return '/'
+  },
+)
 
 export default router

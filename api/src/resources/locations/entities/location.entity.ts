@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-import { Observation } from 'src/observations/entities/observation.entity'
+import { Observation } from 'src/resources/observations/entities/observation.entity'
 
 @Entity()
 @ObjectType({ description: 'location' })

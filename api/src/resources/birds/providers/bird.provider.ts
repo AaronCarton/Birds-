@@ -1,4 +1,4 @@
-import { Bird } from 'src/birds/entities/bird.entity'
+import { Bird } from '../../birds/entities/bird.entity'
 import { DataSource } from 'typeorm'
 
 export const birdProviders = [
