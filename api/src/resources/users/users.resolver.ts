@@ -24,6 +24,11 @@ export class UsersResolver {
     return this.usersService.findOne(id)
   }
 
+  @Query(() => User, { name: 'findUserByUid' })
+  async findUserByUid(@Args('uid', { type: () => String }) uid: string) {
+    return this.usersService.findOneByUid(uid)
+  }
+
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput.id, updateUserInput)

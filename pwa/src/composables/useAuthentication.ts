@@ -41,10 +41,7 @@ export default () => {
     })
   }
 
-  const login = (
-    email: string,
-    password: string,
-  ): Promise<Ref<User | null>> => {
+  const login = (email: string, password: string): Promise<Ref<User | null>> => {
     return new Promise((resolve, reject) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((u: UserCredential) => {

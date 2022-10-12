@@ -25,6 +25,10 @@ export class UsersService {
     return this.userRepo.findOne(new ObjectId(id))
   }
 
+  findOneByUid(uid: string) {
+    return this.userRepo.findOneBy({ uid: uid })
+  }
+
   async update(id: string, updateUserInput: UpdateUserInput) {
     await this.userRepo.update(id, updateUserInput)
     return this.userRepo.findOne(new ObjectId(id))
