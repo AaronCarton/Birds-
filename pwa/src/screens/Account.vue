@@ -24,9 +24,11 @@ export default {
       })
     }
 
-    ;(async () => {
-      console.log(await user.value.getIdToken())
-    })()
+    const getToken = async () => {
+      console.log(await user.value?.getIdToken())
+    }
+
+    getToken()
 
     return {
       user,

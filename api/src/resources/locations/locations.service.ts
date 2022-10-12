@@ -14,11 +14,7 @@ export class LocationsService {
   ) {}
 
   create(createLocationInput: CreateLocationInput): Promise<Location> {
-    const l = new Location()
-    l.name = createLocationInput.name
-    // l.observationsId = createLocationInput.observationsId
-    l.location = createLocationInput.location
-    return this.locationRepository.save(l)
+    return this.locationRepository.save(createLocationInput)
   }
 
   findAll(): Promise<Location[]> {
@@ -29,13 +25,9 @@ export class LocationsService {
     return this.locationRepository.findOne(new ObjectId(id))
   }
 
-  update(updateLocationInput: UpdateLocationInput) {
-    const update = new Location()
-    update.id = new ObjectId(updateLocationInput.id)
-    update.name = updateLocationInput.name
-    // update.observationsId = updateLocationInput.observationsId
-    update.location = updateLocationInput.location
-    return this.locationRepository.save(update)
+  async update(updateLocationInput: UpdateLocationInput) {
+    await this.locationRepository.update(updateLocationInput.id, updateLocationInput)
+    return this.locationRepository.findOne(new ObjectId(updateLocationInput.id))
   }
 
   remove(id: string): Promise<DeleteResult> {

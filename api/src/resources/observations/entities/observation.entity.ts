@@ -9,6 +9,8 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Point } from 'geojson'
+import { GeoPoint } from './geopoint.entity'
 
 @Entity()
 @ObjectType({ description: 'observations' })
@@ -24,6 +26,10 @@ export class Observation {
   @Field()
   @Column()
   userId: string
+
+  @Field(() => GeoPoint)
+  @Column({ nullable: true, type: 'simple-json' })
+  geopoint: Point
 
   @Field({ nullable: true })
   @Column({ nullable: true })
