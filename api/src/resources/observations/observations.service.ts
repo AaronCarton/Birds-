@@ -3,19 +3,41 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { ObjectId } from 'mongodb'
 import { Repository } from 'typeorm'
 
+import { BirdsService } from 'src/resources/birds/birds.service'
 import { CreateObservationInput } from './dto/create-observation.input'
 import { UpdateObservationInput } from './dto/update-observation.input'
 import { Observation } from './entities/observation.entity'
+import { LocationsService } from 'src/resources/locations/locations.service'
+import { UsersService } from 'src/resources/users/users.service'
 
 @Injectable()
 export class ObservationsService {
   constructor(
     @InjectRepository(Observation)
     private readonly observationRepository: Repository<Observation>,
+    private readonly birdService: BirdsService,
+    private readonly locationService: LocationsService,
+    private readonly userService: UsersService,
   ) {}
 
   create(createObservationInput: CreateObservationInput): Promise<Observation> {
-    return this.observationRepository.save(createObservationInput)
+    const o = new Observation()
+    o.name = createObservationInput.name
+    o.description = createObservationInput.description
+    o.weather = createObservationInput.weather
+    o.userId = createObservationInput.userId
+    o.birdId = createObservationInput.birdId
+    o.geolocation = createObservationInput.geoPoint
+    o.locationId = createObservationInput.locationId // TODO: something has been spotted on this location!
+    o.active = createObservationInput.active
+
+    console.log('USER', o.userId)
+
+    this.birdService.incrementObservation(o.birdId)
+    this.locationService.incrementLocation(o.locationId, [o])
+    //this.userService.incrementObservation(o.userId, [o])
+
+    return this.observationRepository.save(o)
   }
 
   findAll(): Promise<Observation[]> {
@@ -26,12 +48,17 @@ export class ObservationsService {
     return this.observationRepository.findOne(new ObjectId(id))
   }
 
-  async update(updateObservationInput: UpdateObservationInput) {
-    await this.observationRepository.update(
-      updateObservationInput.id,
-      updateObservationInput,
-    )
-    return this.observationRepository.findOne(new ObjectId(updateObservationInput.id))
+  update(updateObservationInput: UpdateObservationInput) {
+    const update = new Observation()
+    update.id = updateObservationInput.id
+    update.name = updateObservationInput.name
+    update.description = updateObservationInput.description
+    update.weather = updateObservationInput.weather
+    update.birdId = updateObservationInput.birdId
+    update.locationId = updateObservationInput.locationId
+    update.geolocation = updateObservationInput.geoPoint
+    update.active = updateObservationInput.active
+    return this.observationRepository.save(update)
   }
 
   remove(id: string) {

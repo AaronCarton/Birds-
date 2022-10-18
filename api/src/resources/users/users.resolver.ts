@@ -3,7 +3,7 @@ import { UsersService } from './users.service'
 import { User } from './entities/user.entity'
 import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
-import { ClientMessage, MessageTypes } from 'src/bootstrap/entities/ClientMessage'
+import { MessageTypes } from 'src/bootstrap/entities/ClientMessage'
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -24,32 +24,32 @@ export class UsersResolver {
     return this.usersService.findOne(id)
   }
 
-  @Query(() => User, { name: 'findUserByUid' })
-  async findUserByUid(@Args('uid', { type: () => String }) uid: string) {
-    return this.usersService.findOneByUid(uid)
+  @Query(() => User)
+  findByUid(@Args('uid', { type: () => String }) uid: string) {
+    return this.usersService.findOneBy(uid)
   }
 
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput)
+    return this.usersService.update(updateUserInput)
   }
 
-  @Mutation(() => ClientMessage)
-  async removeUser(@Args('id', { type: () => String }) id: string) {
+  @Mutation(() => User)
+  removeUser(@Args('id', { type: () => String }) id: string) {
     return new Promise((resolve) =>
       this.usersService
         .remove(id)
         .then(() => {
           resolve({
             statusCode: 200,
-            message: `User ${id} deleted`,
+            message: `User with id ${id} was deleted.`,
             type: MessageTypes.success,
           })
         })
         .catch(() => {
           resolve({
-            statusCode: 400,
-            message: `User ${id} not deleted`,
+            statusCode: 500,
+            message: `User with id ${id} could not be deleted.`,
             type: MessageTypes.error,
           })
         }),

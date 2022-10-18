@@ -5,6 +5,8 @@ import { Location } from './entities/location.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, Repository } from 'typeorm'
 import { ObjectId } from 'mongodb'
+import { Observation } from 'src/resources/observations/entities/observation.entity'
+import { Point } from 'geojson'
 
 @Injectable()
 export class LocationsService {
@@ -14,7 +16,12 @@ export class LocationsService {
   ) {}
 
   create(createLocationInput: CreateLocationInput): Promise<Location> {
-    return this.locationRepository.save(createLocationInput)
+    const l = new Location()
+    l.name = createLocationInput.name
+    // l.observationsId = createLocationInput.observationsId
+    // l.location = createLocationInput.location
+    l.area = createLocationInput.area
+    return this.locationRepository.save(l)
   }
 
   findAll(): Promise<Location[]> {
@@ -25,12 +32,40 @@ export class LocationsService {
     return this.locationRepository.findOne(new ObjectId(id))
   }
 
-  async update(updateLocationInput: UpdateLocationInput) {
-    await this.locationRepository.update(updateLocationInput.id, updateLocationInput)
-    return this.locationRepository.findOne(new ObjectId(updateLocationInput.id))
+  findLocationByPoint(p: Point): Promise<Location[]> {
+    return this.locationRepository.find({
+      where: {
+        area: {
+          //@ts-ignore
+          $geoIntersects: {
+            $geometry: p,
+          },
+        },
+      },
+    })
+  }
+
+  update(updateLocationInput: UpdateLocationInput) {
+    const update = new Location()
+    update.id = new ObjectId(updateLocationInput.id)
+    update.name = updateLocationInput.name
+    // update.observationsId = updateLocationInput.observationsId
+    // update.location = updateLocationInput.location
+    update.area = updateLocationInput.area
+    return this.locationRepository.save(update)
   }
 
   remove(id: string): Promise<DeleteResult> {
     return this.locationRepository.delete(new ObjectId(id))
+  }
+
+  async incrementLocation(id: string, observations: Observation[]) {
+    const l: Location = await this.findOne(new ObjectId(id))
+
+    l.observations = l.observations
+      ? [...observations, ...l.observations] // merge the current observations with the new ones
+      : [...observations]
+
+    return this.locationRepository.save(l)
   }
 }

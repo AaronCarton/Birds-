@@ -7,9 +7,6 @@ export class CreateLocationInput {
   @Field()
   name: string
 
-  @Field()
-  location: string
-
   @Field(() => Area)
   area: Polygon
 }

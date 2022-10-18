@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql'
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { ObjectId } from 'mongodb'
+
 import { Observation } from 'src/resources/observations/entities/observation.entity'
 
 @Entity()
@@ -17,16 +18,16 @@ export class User {
   id: ObjectId
 
   @Field()
-  @Column({ unique: true })
+  @Column()
   uid: string
 
   @Field(() => [Observation], { nullable: 'itemsAndList' }) // Can return []
   @Column({ nullable: true })
-  observations: Observation[]
+  observations?: Observation[]
 
-  @Field()
-  @Column({ default: 0 })
-  observationCount: number
+  @Field(() => Int)
+  @Column()
+  observationsCount?: number
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

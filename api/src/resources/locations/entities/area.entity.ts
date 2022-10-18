@@ -5,6 +5,7 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql'
 export class Area {
   @Field(() => [[[Number]]])
   coordinates: number[][][]
+
   @Field()
   type: string
 }

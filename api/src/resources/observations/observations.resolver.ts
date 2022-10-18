@@ -4,14 +4,15 @@ import { ObservationsService } from './observations.service'
 import { Observation } from './entities/observation.entity'
 import { CreateObservationInput } from './dto/create-observation.input'
 import { UpdateObservationInput } from './dto/update-observation.input'
-import { BirdsService } from '../birds/birds.service'
-import { LocationsService } from '../locations/locations.service'
+import { BirdsService } from 'src/resources/birds/birds.service'
+import { LocationsService } from 'src/resources/locations/locations.service'
 import { Bird } from '../birds/entities/bird.entity'
-import { Location } from '../locations/entities/location.entity'
+import { Location } from 'src/resources/locations/entities/location.entity'
 import { ClientMessage, MessageTypes } from '../../bootstrap/entities/ClientMessage'
 import { UseGuards } from '@nestjs/common'
 import { FirebaseGuard } from 'src/auth/guards/firebase.guard'
-import { CurrentUser } from 'src/decorators/user.decorator'
+import { CurrentUser } from 'src/auth/decorators/user.decorator'
+import { NotificationsGateway } from 'src/resources/notifications/notifications.gateway'
 
 @Resolver(() => Observation)
 export class ObservationsResolver {
@@ -19,6 +20,7 @@ export class ObservationsResolver {
     private readonly observationsService: ObservationsService,
     private readonly birdService: BirdsService,
     private readonly locationService: LocationsService,
+    private readonly notificationsGateway: NotificationsGateway,
   ) {}
 
   @ResolveField()
@@ -32,17 +34,24 @@ export class ObservationsResolver {
   }
 
   @Mutation(() => Observation)
-  createObservation(
+  async createObservation(
     @Args('createObservationInput')
     createObservationInput: CreateObservationInput,
   ) {
-    return this.observationsService.create(createObservationInput)
+    const obs = await this.observationsService.create(createObservationInput)
+    const locat = await this.locationService.findLocationByPoint(obs.geolocation)
+    if (locat.length > 0) {
+      //verwittig iedereen in deze room
+      this.notificationsGateway.server.to(locat[0].name).emit('bird:obsertvation', obs)
+    }
+    return obs
   }
 
   @UseGuards(FirebaseGuard)
+  @UseGuards(FirebaseGuard)
   @Query(() => [Observation], { name: 'observations' })
   findAll(@CurrentUser() user) {
-    console.log(user)
+    console.log(user.uid)
     return this.observationsService.findAll()
   }
 

@@ -7,6 +7,7 @@ import {
   UserCredential,
 } from 'firebase/auth'
 import { ref, Ref } from 'vue'
+
 import useFirebase from './useFirebase'
 
 const user: Ref<User | null> = ref(null)
@@ -41,7 +42,10 @@ export default () => {
     })
   }
 
-  const login = (email: string, password: string): Promise<Ref<User | null>> => {
+  const login = (
+    email: string,
+    password: string,
+  ): Promise<Ref<User | null>> => {
     return new Promise((resolve, reject) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((u: UserCredential) => {

@@ -1,5 +1,7 @@
 <template>
-  <router-view class="min-h-screen bg-neutral-50 dark:bg-neutral-700"></router-view>
+  <router-view
+    class="@dark:bg-neutral-800 @dark:text-neutral-50 min-h-screen bg-neutral-50"
+  ></router-view>
 </template>
 
 <script lang="ts">
@@ -12,11 +14,9 @@ import useAuthentication from './composables/useAuthentication'
 
 export default {
   setup() {
+    const { user } = useAuthentication()
     const { apolloClient } = useGraphQL()
     const { loadCustomUser } = useCustomUser()
-    const { user } = useAuthentication()
-
-    console.log('firebase user', user.value)
 
     provide(DefaultApolloClient, apolloClient)
 

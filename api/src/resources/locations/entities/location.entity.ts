@@ -7,9 +7,9 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Polygon } from 'geojson'
 
 import { Observation } from 'src/resources/observations/entities/observation.entity'
-import { Polygon } from 'geojson'
 import { Area } from './area.entity'
 
 @Entity()
@@ -23,17 +23,9 @@ export class Location {
   @Column()
   name: string
 
-  // @Field()
-  // @Column()
-  // observationsId: string
-
   @Field(() => [Observation], { nullable: 'itemsAndList' })
   @Column({ nullable: true })
   observations: Observation[]
-
-  @Field()
-  @Column()
-  location: string
 
   @Field(() => Area)
   @Column({ nullable: true, type: 'simple-json' })
