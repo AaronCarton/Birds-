@@ -15,7 +15,7 @@
       <h2 class="font-theme mb-3 text-2xl font-medium tracking-wide">
         Recent observations
       </h2>
-      <observations-table :observations="customUser.observations!" />
+      <observations-table :observations="customUser.observations" />
     </div>
   </route-holder>
 </template>

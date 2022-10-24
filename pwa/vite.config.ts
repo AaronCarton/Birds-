@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
 import Unocss from 'unocss/vite'
-
 import { VitePluginFonts } from 'vite-plugin-fonts'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   // build: {},
@@ -19,7 +18,8 @@ export default defineConfig({
       rules: [['font-theme', { 'font-family': 'din-condensed, sans-serif;' }]],
     }),
 
-    // Werkt niet?
+    VitePWA({}),
+
     VitePluginFonts({
       typekit: {
         id: 'rjb1sqs', // Temp!

@@ -23,7 +23,7 @@
         <td>{{ o.name }}</td>
 
         <td>{{ o.userId }}</td>
-        <td>{{ new Date(o.createdAt).toLocaleDateString() }}</td>
+        <td>{{ new Date(o.createdAt!).toLocaleDateString() }}</td>
       </tr>
     </tbody>
     <tbody class="grid w-full place-items-center" v-else>
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import Observation from '../../../interfaces/interface.observation'
+import Observation from './../../interfaces/interface.observation'
 
 export default {
   props: {
