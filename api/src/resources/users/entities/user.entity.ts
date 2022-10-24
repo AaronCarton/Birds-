@@ -9,6 +9,7 @@ import {
 import { ObjectId } from 'mongodb'
 
 import { Observation } from 'src/resources/observations/entities/observation.entity'
+import { Role, RoleType } from './roles.entity'
 
 @Entity()
 @ObjectType()
@@ -20,6 +21,10 @@ export class User {
   @Field()
   @Column()
   uid: string
+
+  @Field(() => Role, { nullable: true })
+  @Column({ default: { name: RoleType.USER } })
+  role: Role
 
   @Field(() => [Observation], { nullable: 'itemsAndList' }) // Can return []
   @Column({ nullable: true })

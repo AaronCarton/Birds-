@@ -19,10 +19,7 @@ export type FirebaseAuthDecodedUser = Readonly<
 export const StrategyName = 'firebase-auth'
 
 @Injectable()
-export class FirebaseAuthStrategy extends PassportStrategy(
-  Strategy,
-  StrategyName,
-) {
+export class FirebaseAuthStrategy extends PassportStrategy(Strategy, StrategyName) {
   private readonly checkRevoked = false
   private readonly logger = new Logger(FirebaseAuthStrategy.name)
 
@@ -42,9 +39,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
 
   private async authorize(jwtToken: string): Promise<DecodedIdToken> {
     try {
-      return await this.firebase
-        .getAuth()
-        .verifyIdToken(jwtToken, this.checkRevoked)
+      return await this.firebase.getAuth().verifyIdToken(jwtToken, this.checkRevoked)
     } catch (err: unknown) {
       const e = err as FirebaseError
       if (e.code === 'auth/id-token-expired') {
