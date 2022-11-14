@@ -2,3 +2,6 @@
 **/.env
 **/dist/
 api/firebase-adminsdk.json
+pwa/src/utils/mct-birds-translation.json
+.DS_Store
+api/birds-lab-firebase-adminsdk.json
