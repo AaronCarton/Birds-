@@ -3,7 +3,7 @@ import path from 'path'
 import process from 'process'
 import { authenticate } from '@google-cloud/local-auth'
 import { google } from 'googleapis'
-import { AVAILABLE_LOCALES } from '../composables/usei18n'
+import usei18n from '../composables/usei18n'
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -72,6 +72,7 @@ async function authorize() {
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 async function generateMessagesForLocales(auth) {
+  const { AVAILABLE_LOCALES } = usei18n()
   const sheets = google.sheets({ version: 'v4', auth })
   AVAILABLE_LOCALES.map(async (locale) => {
     const res = await sheets.spreadsheets.values.get({
